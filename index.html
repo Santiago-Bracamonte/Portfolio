@@ -325,7 +325,7 @@
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">Jumbox - Gestión de Inventarios</h2>
-                <a href="https://github.com/tuusuario/Jumbox" target="_blank" class="btn btn-primary">Ver en GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/jumbox" target="_blank" class="btn btn-primary">Ver en GitHub</a>
               </div>
             </div>
           </div>
@@ -342,7 +342,7 @@
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">CRUD con PHP</h2>
-                <a href="https://github.com/tuusuario/CRUD-PHP" target="_blank" class="btn btn-primary">Ver en GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/Proyecto-PHP-BD-Usuarios" target="_blank" class="btn btn-primary">Ver en GitHub</a>
               </div>
             </div>
           </div>
@@ -359,7 +359,7 @@
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">Blackjack</h2>
-                <a href="https://github.com/tuusuario/Blackjack" target="_blank" class="btn btn-primary">Ver en GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/blackjack" target="_blank" class="btn btn-primary">Ver en GitHub</a>
               </div>
             </div>
           </div>
@@ -392,8 +392,8 @@
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
-                <h2 class="w-title">Studio Lena Mado</h2>
-                <a href="https://github.com/tuusuario/LenaMado" target="_blank" class="btn btn-primary">Ver en GitHub</a>
+                <h2 class="w-title">Torneo de futbol en JAVA</h2>
+                <a href="https://github.com/Santiago-Bracamonte/TpTorneo" target="_blank" class="btn btn-primary">Ver en GitHub</a>
               </div>
             </div>
           </div>
@@ -539,9 +539,34 @@
   <script src="js/main.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector(".contactForm").addEventListener("submit", function () {
-            document.getElementById("submitBtn").style.display = "none"; // Ocultar el botón
-            document.getElementById("loading").style.display = "block";  // Mostrar el loader
+        document.querySelector(".contactForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evita el envío inmediato para procesarlo manualmente
+    
+            let form = this;
+            let submitBtn = document.getElementById("submitBtn");
+            let loader = document.getElementById("loading");
+    
+            // Ocultar botón y mostrar loader
+            submitBtn.style.display = "none";
+            loader.style.display = "block";
+    
+            // Enviar formulario manualmente
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            }).then(response => {
+                if (response.ok) {
+                    // Limpiar los campos del formulario
+                    form.reset();
+                    // Ocultar loader y volver a mostrar el botón tras 2 segundos
+                    setTimeout(() => {
+                        loader.style.display = "none";
+                        submitBtn.style.display = "block";
+                    }, 2000);
+                }
+            }).catch(error => {
+                console.error("Error al enviar el formulario:", error);
+            });
         });
     });
     </script>
