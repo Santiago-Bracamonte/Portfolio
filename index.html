@@ -537,6 +537,15 @@
   <script src="lib/typed/typed.min.js"></script>
   <script src="contactform/contactform.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector(".contactForm").addEventListener("submit", function () {
+            document.getElementById("submitBtn").style.display = "none"; // Ocultar el botón
+            document.getElementById("loading").style.display = "block";  // Mostrar el loader
+        });
+    });
+    </script>
+    
 
 </body>
 </html>
