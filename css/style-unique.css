@@ -1,0 +1,279 @@
+/* style-unique.css
+   Unique portfolio look for Santiago Bracamonte
+   - Distinctive palette, bold headings, geometric accents
+   - Uses Google fonts (Unbounded + Space Grotesk)
+   - Non-destructive: overrides existing styles where necessary
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap');
+
+:root{
+  --bg-1: #0b0714; /* near-black deep */
+  --bg-2: #0f1b23; /* deep muted navy */
+  --section-bg: #0f1418; /* unified section background (neutral dark) */
+  --accent: #2dd4bf; /* teal mint (primary accent) */
+  --accent-2: #60a5fa; /* soft sky-blue (secondary accent) */
+  --glass: rgba(255,255,255,0.04);
+  --muted: #9aa8bf;
+  --glass-2: rgba(10,10,12,0.6);
+}
+
+/* Global reset tweaks */
+html,body{
+  height:100%;
+  background: var(--section-bg); /* unified solid background for the whole page */
+  color: #e6eef8;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.unique-portfolio *{box-sizing: border-box}
+
+/* Decorative diagonal stripe */
+.unique-portfolio::before{
+  content: '';
+  position: fixed;
+  left: -20%;
+  top: -10%;
+  width: 140%;
+  height: 40vh;
+  background: linear-gradient(90deg, rgba(255,93,122,0.06), rgba(255,209,102,0.04));
+  transform: rotate(-8deg);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Hide decorative stripe to avoid visual section breaks */
+.unique-portfolio::before{ display:none }
+
+/* Navbar: frosted glass and neon accent */
+.navbar{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px) saturate(120%);
+  z-index: 1020;
+}
+.navbar .navbar-brand{
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight:900;
+  letter-spacing:1px;
+  color:var(--accent) !important;
+  text-shadow: 0 6px 20px rgba(10,10,12,0.6);
+}
+.navbar .nav-link{
+  color: var(--muted) !important;
+  transition: color .25s ease, transform .25s ease;
+}
+.navbar .nav-link:hover{color:var(--accent) !important; transform: translateY(-2px)}
+
+/* Hero / Intro */
+.intro.route.bg-image{
+  position:relative;
+  min-height:78vh;
+  display:flex;
+  align-items:center;
+  z-index:1;
+  overflow:visible;
+}
+.intro .overlay-itro{background: linear-gradient(90deg, rgba(10,10,12,0.4), rgba(10,10,30,0.2));}
+.intro-title{
+  font-family: 'Poppins', system-ui;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height:1;
+  margin:0 0 12px;
+  font-weight:900;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 10px 30px rgba(10,6,20,0.5));
+}
+.intro-subtitle{
+  font-family: 'Inter', sans-serif;
+  color: #cbd6e8;
+  font-size: clamp(14px, 2.4vw, 20px);
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+}
+
+/* Center hero texts and ensure typed text aligns with name */
+.intro-content .container{ text-align:center }
+.intro-subtitle{ justify-content:center }
+.text-slider{ display:inline-block; margin-left:.5rem; color:var(--accent); font-weight:600 }
+.intro .btn-primary{
+  background: linear-gradient(90deg, var(--accent), rgba(96,165,250,0.06));
+  border: none;
+  color: #071422;
+  padding: .9rem 1.4rem;
+  border-radius: 999px;
+  font-weight:700;
+  box-shadow: 0 8px 30px rgba(36,178,157,0.08), inset 0 -6px 16px rgba(96,165,250,0.03);
+}
+
+/* Cards and sections: glass look */
+.box-shadow-full{
+  background: transparent; /* make cards blend with unified bg */
+  border-radius: 8px;
+  padding: 1.4rem;
+  box-shadow: none; /* remove strong shadow to avoid separations */
+  border: none;
+  overflow: visible;
+}
+
+/* Service boxes: consistent sizing and contrast */
+.service-box{min-height:220px;display:flex;align-items:flex-start;justify-content:flex-start;padding:1rem;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03)}
+.service-box .s-title{color:#f8fafc;font-weight:700}
+.service-box .s-description{color:#d7e1f4}
+
+/* Ensure consistent layout inside service boxes */
+.service-box .service-ico{flex:0 0 auto;margin-right:.9rem}
+.service-box .service-content{flex:1 1 auto;display:flex;flex-direction:column}
+.service-box .s-title{margin-bottom:.6rem}
+.service-box .s-description{margin-top:auto}
+
+/* Lighten About section for readability */
+.about-mf .box-shadow-full{background: transparent}
+.about-me .lead{color:#dfe9fb}
+
+/* Make services columns behave equally by making their column wrapper a flex container */
+/* ensure services columns are equal height */
+.services-mf .row > [class*="col-"]{display:flex}
+.services-mf .row > [class*="col-"] .service-box{flex:1}
+
+.title-box .title-a, .title-box-2 .title-left{
+  color: #f3f7fb;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing:.6px;
+}
+
+/* Skills progress re-style */
+.skill-mf .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:40px}
+.skill-mf .progress .progress-bar{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(255,93,122,0.08)}
+
+/* Portfolio/work cards */
+.work-box{overflow:hidden;border-radius:8px;border:1px solid rgba(255,255,255,0.03);transition:transform .35s ease, box-shadow .35s ease}
+.work-box:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(5,3,12,0.7)}
+.work-img img{width:100%;height:220px;object-fit:cover;filter:contrast(.95) saturate(1.05)}
+.w-title{font-weight:700;color:#f3f7fb;text-shadow:0 6px 20px rgba(8,14,20,0.5)}
+
+/* Services title should match the generic .title-box styling (same as Projects). */
+
+/* Interactive tilt and reveal */
+.work-box.interactive{transform:translateY(0);will-change:transform}
+.work-box.interactive .work-content{transition:transform .28s ease}
+.work-box.in-view{opacity:1;transform:translateY(0) scale(1);filter:none}
+.work-box{opacity:.02;transform:translateY(18px) scale(.995);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1)}
+
+/* Button unique style and ripple */
+.btn-unique{position:relative;overflow:hidden;border-radius:999px}
+.btn-unique::after{content:'';position:absolute;left:50%;top:50%;width:0;height:0;background:rgba(255,255,255,0.12);transform:translate(-50%,-50%);border-radius:50%;opacity:0;transition:width .4s ease,height .4s ease,opacity .4s}
+.btn-unique:active::after{width:300px;height:300px;opacity:1;transition:0s}
+
+/* Footer/contact */
+.paralax-mf.footer-paralax{padding-top:3.2rem;padding-bottom:3.2rem}
+.contact-mf .contactForm .form-control{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);color:#0b0714;padding:.6rem .8rem;border-radius:8px}
+.contact-mf .contactForm .form-control::placeholder{color:rgba(11,7,20,0.45)}
+.contact-mf .contactForm .form-control:focus{outline:none;box-shadow:0 6px 20px rgba(255,93,122,0.06);border-color:var(--accent)}
+.button-a{background:transparent;border:1px solid rgba(255,255,255,0.07);color:#dfe9fb;padding:.7rem 1.1rem;border-radius:8px}
+
+/* Social icons - neon hover */
+.socials ul li a .ico-circle{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.03);transition:all .28s ease}
+.socials ul li a:hover .ico-circle{transform:translateY(-6px);box-shadow:0 12px 30px rgba(255,93,122,0.12);background:linear-gradient(180deg, rgba(255,93,122,0.14), rgba(255,209,102,0.06))}
+
+/* Back-to-top */
+.back-to-top{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0714}
+
+/* Responsive tweaks */
+@media (max-width: 768px){
+  .unique-portfolio::before{display:none}
+  .intro-title{font-size:34px}
+  .work-img img{height:180px}
+}
+
+/* Disable floaty animation on small screens and refine layout */
+@media (max-width: 992px){
+  .work-box{animation:none}
+  .intro.route.bg-image{min-height:58vh;padding:2.4rem 0}
+  .box-shadow-full{padding:1rem}
+  .about-img img{max-width:100%;height:auto}
+}
+
+@media (max-width: 480px){
+  .intro-title{font-size:28px}
+  .work-img img{height:140px}
+  .navbar .nav-link{font-size:14px}
+  .btn-unique{padding:.5rem .9rem}
+}
+
+/* Micro-animations */
+@keyframes floaty{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
+}
+.work-box{animation: floaty 8s ease-in-out infinite}
+
+/* Small accessibility helpers */
+a{outline-color: rgba(255,209,102,0.18)}
+
+/* End of style-unique.css */
+
+/* Additional overrides: center Services title, unify section backgrounds and improve contact contrast */
+.services-mf .title-box.text-center { text-align: center }
+.services-mf .title-box.text-center .title-a { display: inline-block; margin: 0 auto }
+
+/* Make About, Services and Projects share the same base color (override any bg images) */
+.about-mf, .services-mf, .portfolio-mf { background: transparent; }
+
+/* Force equal-height columns for services on all sizes by making the column a flex container */
+
+
+@media (min-width: 768px) {
+  .services-mf .row > [class*="col-"] { display:flex }
+  .services-mf .row > [class*="col-"] .service-box { flex: 1 }
+}
+
+/* Fullscreen centered title area for Services */
+.title-box.fullscreen-center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:36vh; /* centers title vertically in a comfortable viewport area */
+  padding:2rem 1rem;
+}
+
+/* Portfolio/project image responsiveness and reveal animation */
+.work-img img{
+  width:100%;
+  aspect-ratio: 16/9;
+  height:auto;
+  object-fit:cover;
+  max-height:360px;
+}
+
+@media (max-width: 768px){
+  .work-img img{ max-height:220px }
+}
+@media (max-width: 480px){
+  .work-img img{ max-height:160px }
+}
+
+/* Tweak reveal animation for project cards */
+.work-box{opacity:0;transform:translateY(18px) scale(.995);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1), box-shadow .35s ease}
+.work-box.in-view{opacity:1;transform:translateY(0) scale(1);box-shadow:0 20px 50px rgba(5,3,12,0.45)}
+
+/* Hover: subtle image overlay and button slide */
+.work-img{position:relative;overflow:hidden}
+.work-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.28));opacity:0;transition:opacity .35s ease}
+.work-box:hover .work-img::after{opacity:1}
+.work-content .btn{transform:translateY(8px);opacity:0;transition:transform .35s ease, opacity .35s ease}
+.work-box:hover .work-content .btn{transform:translateY(0);opacity:1}
+
+/* Contact inputs: stronger contrast */
+.contact-mf .contactForm .form-control { background: #ffffff !important; color: #0b0714 !important; border: 1px solid rgba(10,10,12,0.06) !important }
+.contact-mf .contactForm .form-control::placeholder { color: rgba(11,7,20,0.45) !important }
+.contact-mf .contactForm .form-control:focus { border-color: var(--accent) !important; box-shadow: 0 8px 30px rgba(255,93,122,0.08) !important }
+

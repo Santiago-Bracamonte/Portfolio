@@ -14,6 +14,8 @@
   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
   <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <!-- Unique, custom stylesheet (originalidad y estilo propio) -->
+  <link href="css/style-unique.css" rel="stylesheet">
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
@@ -21,12 +23,14 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="unique-portfolio">
 
   <!--/ Nav Star /-->
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll" href="#page-top">DevSantiago</a>
+      <!-- Language toggle -->
+      <button id="langToggle" class="btn btn-sm btn-unique" aria-label="Change language">ES</button>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
         aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span></span>
@@ -36,19 +40,19 @@
       <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link js-scroll active" href="#home">Home</a>
+            <a class="nav-link js-scroll active" href="#home" data-i18n="nav.home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="#about">About me</a>
+            <a class="nav-link js-scroll" href="#about" data-i18n="nav.about">About me</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="#service">Services</a>
+            <a class="nav-link js-scroll" href="#service" data-i18n="nav.services">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="#work">Work</a>
+            <a class="nav-link js-scroll" href="#work" data-i18n="nav.work">Work</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="#contact">Contact</a>
+            <a id="nav-contact" class="nav-link js-scroll" href="#contact" data-i18n="nav.contact">Contact</a>
           </li>
         </ul>
       </div>
@@ -62,11 +66,9 @@
     <div class="intro-content display-table">
       <div class="table-cell">
         <div class="container">
-          <h1 class="intro-title mb-4">I am Santiago Bracamonte</h1>
-          <p class="intro-subtitle"><span class="text-slider-items">Web Developer,Web Designer,FullStack Developer</span><strong class="text-slider"></strong></p>
-          <a href="CV/CV english santiago (1).pdf" download="Santiago_Bracamonte_CV_English.pdf" class="btn btn-primary mt-3">
-            Download CV
-          </a>
+          <h1 class="intro-title mb-4" data-i18n="hero.title">I am Santiago Bracamonte</h1>
+          <p class="intro-subtitle"><span class="text-slider-items" data-i18n="hero.skills">Web Developer,Web Designer,FullStack Developer</span><strong class="text-slider"></strong></p>
+          <a href="CV/CV_English_SantiagoBracamonte.pdf" download="Santiago_Bracamonte_CV_English.pdf" class="btn btn-primary btn-unique mt-3" aria-label="Download CV" data-i18n="hero.cv">Download CV</a>
         </div>
       </div>
     </div>
@@ -81,19 +83,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="row">
-                  <div class="col-sm-6 col-md-5">
-                    <div class="about-img">
-                      <img src="img/foto-cv.jpeg" class="img-fluid rounded b-shadow-a" alt="">
+                    <div class="col-12">
+                      <div class="about-info">
+                        <p><span class="title-s">Name: </span> <span>Santiago Bracamonte</span></p>
+                        <p><span class="title-s">Profile: </span> <span>System Analyst</span></p>
+                        <p><span class="title-s">Email: </span> <span><a href="mailto:santiagobracamonte01@gmail.com">santiagobracamonte01@gmail.com</a></span></p>
+                        <p><span class="title-s">Phone: </span> <span>(+54) 1131226566</span></p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-sm-6 col-md-7">
-                    <div class="about-info">
-                      <p><span class="title-s">Name: </span> <span>Santiago Bracamonte</span></p>
-                      <p><span class="title-s">Profile: </span> <span>System Analyst</span></p>
-                      <p><span class="title-s">Email: </span> <span>santiagobracamonte01@gmail.com</span></p>
-                      <p><span class="title-s">Phone: </span> <span>(+54) 1131226566</span></p>
-                    </div>
-                  </div>
                 </div>
                 <div class="skill-mf">
                   <p class="title-s">Skills</p>
@@ -139,19 +136,19 @@
               <div class="col-md-6">
                 <div class="about-me pt-4 pt-md-0">
                   <div class="title-box-2">
-                    <h5 class="title-left">
+                    <h5 class="title-left" data-i18n="about.title">
                       About me
                     </h5>
                   </div>
-                  <p class="lead">
+                  <p class="lead" data-i18n="about.p1">
                     I am responsible, dynamic and creative, with the ability to adapt and collaborate in a team under
                     pressure. I have the initiative to solve problems effectively, and my focus on continuous improvement
                     contributes to the success of technology projects and the achievement of business goals.                    
                   </p>
-                  <p class="lead">
+                  <p class="lead" data-i18n="about.p2">
                     I am always looking to expand my knowledge and enhance my technical abilities. Recently, I have completed several online courses, including 'SQL for Data Science' and 'Technical Support Fundamentals' on Coursera, to further improve my skills and keep up with the latest industry trends. These courses have deepened my understanding of data analysis and technical support, making me more equipped to contribute to diverse projects and solve complex problems effectively.
                   </p>
-                  <p class="lead">
+                  <p class="lead" data-i18n="about.p3">
                     My technical proficiency spans a wide range of programming languages and tools, including advanced knowledge of HTML5, CSS, and Bootstrap, as well as intermediate experience with Java, PHP, and MySQL. I am also skilled in frameworks such as Laravel and have solid experience with both Visual Studio and Linux environments. My expertise in Microsoft Office and Adobe Photoshop complements my ability to work in a variety of software environments, ensuring I can tackle any project with a versatile approach.
                   </p>
                 </div>
@@ -163,101 +160,91 @@
     </div>
   </section>
 
+  
   <!--/ Section Services Star /-->
   <section id="service" class="services-mf route">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box text-center">
-            <h3 class="title-a">
-              Services
-            </h3>
-            <p class="subtitle-a">
-              High-quality solutions to meet your technological needs.
-            </p>
-            <div class="line-mf"></div>
-          </div>
-        </div>
+      <!-- Title area: centered in the viewport -->
+      <div class="title-box fullscreen-center text-center">
+        <h3 class="title-a" data-i18n="services.title">Services</h3>
+        <p class="subtitle-a" data-i18n="services.subtitle">High-quality solutions to meet your technological needs.</p>
+        <div class="line-mf"></div>
       </div>
-      <div class="row">
+
+      <!-- Services grid -->
+      <div class="row mt-4">
         <div class="col-md-4">
           <div class="service-box">
             <div class="service-ico">
               <span class="ico-circle"><i class="ion-monitor"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Web Design</h2>
-              <p class="s-description text-center">
-                User-friendly and visually appealing website designs that align with your brand's identity and enhance user experience.
-              </p>
+              <h2 class="s-title" data-i18n="services.webdesign">Web Design</h2>
+              <p class="s-description text-center" data-i18n="services.webdesign.desc">User-friendly and visually appealing website designs that align with your brand's identity and enhance user experience.</p>
             </div>
           </div>
         </div>
+
         <div class="col-md-4">
           <div class="service-box">
             <div class="service-ico">
               <span class="ico-circle"><i class="ion-code-working"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Web Development</h2>
-              <p class="s-description text-center">
-                I offer custom web development services using technologies such as PHP, Java, MySQL, and PostgreSQL to build responsive and dynamic websites.
-              </p>
+              <h2 class="s-title" data-i18n="services.webdev">Web Development</h2>
+              <p class="s-description text-center" data-i18n="services.webdev.desc">Custom web applications using PHP, Java, MySQL and modern JS stacks to build responsive, maintainable systems.</p>
             </div>
           </div>
         </div>
+
         <div class="col-md-4">
           <div class="service-box">
             <div class="service-ico">
               <span class="ico-circle"><i class="ion-help-circled"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Technical Support</h2>
-              <p class="s-description text-center">
-                Providing troubleshooting, maintenance, and technical support for a variety of systems and software, ensuring smooth and efficient operations.
-              </p>
+              <h2 class="s-title" data-i18n="services.techsupport">Technical Support</h2>
+              <p class="s-description text-center" data-i18n="services.techsupport.desc">Troubleshooting, maintenance and support to keep systems stable and performant.</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-4 mt-4">
           <div class="service-box">
             <div class="service-ico">
               <span class="ico-circle"><i class="ion-android-phone-portrait"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Responsive Design</h2>
-              <p class="s-description text-center">
-                Designing websites that adapt seamlessly to any device, ensuring an optimal viewing experience across smartphones, tablets, and desktops.
-              </p>
+              <h2 class="s-title" data-i18n="services.responsive">Responsive Design</h2>
+              <p class="s-description text-center" data-i18n="services.responsive.desc">Designs that adapt seamlessly to mobile, tablet and desktop for an optimal user experience.</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-4 mt-4">
           <div class="service-box">
             <div class="service-ico">
-              <span class="ico-circle"><i class="fas fa-database"></i></span> 
+              <span class="ico-circle"><i class="fas fa-database"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Database Management</h2>
-              <p class="s-description text-center">
-                Expertise in database design, optimization and management with tools such as MySQL and PostgreSQL to ensure data integrity and performance.              </p>
+              <h2 class="s-title" data-i18n="services.db">Database Management</h2>
+              <p class="s-description text-center" data-i18n="services.db.desc">Database design, optimization and maintenance with MySQL/PostgreSQL to ensure data integrity and performance.</p>
             </div>
           </div>
-        </div>        
-        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4 mt-4">
           <div class="service-box">
             <div class="service-ico">
               <span class="ico-circle"><i class="ion-paintbrush"></i></span>
             </div>
             <div class="service-content">
-              <h2 class="s-title">Custom Software Development</h2>
-              <p class="s-description text-center">
-                Focus on developing custom software solutions using Java, PHP and Laravel, tailored to your business needs.
-              </p>
+              <h2 class="s-title" data-i18n="services.custom">Custom Software Development</h2>
+              <p class="s-description text-center" data-i18n="services.custom.desc">Tailored software using Java, PHP and Laravel to solve specific business problems.</p>
             </div>
           </div>
         </div>
-        
+
       </div>
     </div>
   </section>
@@ -273,8 +260,8 @@
               <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">17</p>
-              <span class="counter-text">WORKS COMPLETED</span>
+              <p class="counter" data-target="17">0</p>
+              <span class="counter-text" data-i18n="counters.works">WORKS COMPLETED</span>
             </div>
           </div>
         </div>
@@ -284,8 +271,8 @@
               <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">3</p>
-              <span class="counter-text">YEARS OF EXPERIENCE</span>
+              <p class="counter" data-target="3">0</p>
+              <span class="counter-text" data-i18n="counters.years">YEARS OF EXPERIENCE</span>
             </div>
           </div>
         </div>
@@ -295,8 +282,8 @@
               <span class="ico-circle"><i class="ion-ios-people"></i></span>
             </div>
             <div class="counter-num">
-              <p class="counter">8</p>
-              <span class="counter-text">TOTAL CLIENTS</span>
+              <p class="counter" data-target="8">0</p>
+              <span class="counter-text" data-i18n="counters.clients">TOTAL CLIENTS</span>
             </div>
           </div>
         </div>
@@ -310,8 +297,8 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="title-box text-center">
-          <h3 class="title-a">Projects</h3>
-          <p class="subtitle-a">
+          <h3 class="title-a" data-i18n="projects.title">Projects</h3>
+          <p class="subtitle-a" data-i18n="projects.subtitle">
             Some of my projects available on GitHub.
             </p>
           <div class="line-mf"></div>
@@ -321,75 +308,90 @@
     <div class="row">
       
       <div class="col-md-4">
-        <div class="work-box">
-          <div class="work-img">
-            <img src="img/Jumbox-Java.jpeg" alt="Jumbox" class="img-fluid">
+  <div class="work-box interactive">
+            <div class="work-img">
+            <img src="img/work-1.jpg" alt="Jumbox" class="img-fluid">
           </div>
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">Jumbox - Inventory management with Java advanced project </h2>
-                <a href="https://github.com/Santiago-Bracamonte/jumbox" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/jumbox" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="work-box">
+        <div class="work-box interactive">
           <div class="work-img">
-            <img src="img/StoreManager.jpeg" alt="CRUD PHP" class="img-fluid">
+            <img src="img/work-2.jpg" alt="StoreManager" class="img-fluid">
           </div>
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">StoreManager - Made with PHP, HTML, CSS and MySql</h2>
-                <a href="https://github.com/Santiago-Bracamonte/Proyecto-PHP-BD-Usuarios" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/Proyecto-PHP-BD-Usuarios" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="work-box">
+        <div class="work-box interactive">
           <div class="work-img">
-            <img src="img/Blackjack-Java.webp" alt="Blackjack" class="img-fluid">
+            <img src="img/work-3.jpg" alt="Blackjack" class="img-fluid">
           </div>
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">Blackjack with Java - Beginner Project</h2>
-                <a href="https://github.com/Santiago-Bracamonte/blackjack" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/blackjack" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="work-box">
+      <div class="col-md-4">
+        <div class="work-box interactive">
           <div class="work-img">
-            <img src="img/Java-Soccer-Tournament.webp" alt="Studio Lena Mado" class="img-fluid">
+            <img src="img/work-4.jpg" alt="Java Soccer" class="img-fluid">
           </div>
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
                 <h2 class="w-title">Java Soccer tournament intermediate project</h2>
-                <a href="https://github.com/Santiago-Bracamonte/TpTorneo" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <a href="https://github.com/Santiago-Bracamonte/TpTorneo" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="work-box">
+      <div class="col-md-4">
+        <div class="work-box interactive">
           <div class="work-img">
-            <img src="img/Design-Front-End-Real-Estate.webp" alt="Studio Big Bang" class="img-fluid">
+            <img src="img/work-5.jpg" alt="Mobile App" class="img-fluid">
           </div>
           <div class="work-content">
             <div class="row">
               <div class="col-sm-12 text-center">
-                <h2 class="w-title">Front-End design for real estate with HTML and CSS</h2>
-                <a href="https://github.com/Santiago-Bracamonte/Inmobiliaria" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <h2 class="w-title">Mobile App Project in Android Studio</h2>
+                <a href="https://github.com/Santiago-Bracamonte/HospitalUniversitario" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4  ">
+        <div class="work-box interactive">
+          <div class="work-img">
+            <img src="img/work-6.jpg" alt="Mobile App 2" class="img-fluid">
+          </div>
+          <div class="work-content">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <h2 class="w-title">Mobile App Project in Android Studio</h2>
+                <a href="https://github.com/Santiago-Bracamonte/HospitalUniversitario" target="_blank" class="btn btn-primary btn-unique">View on GitHub</a>
               </div>
             </div>
           </div>
@@ -412,11 +414,11 @@
             <div id="contact" class="box-shadow-full">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="title-box-2">
-                    <h5 class="title-left">
-                      Send Message Us
-                    </h5>
-                  </div>
+                            <div class="title-box-2">
+                              <h5 class="title-left" data-i18n="contact.send">
+                                Send Message Us
+                              </h5>
+                            </div>
                   <div>
                     <form action="https://formsubmit.co/santiagobracamonte01@gmail.com" method="POST" class="contactForm">
                       <input type="hidden" name="_captcha" value="false">
@@ -426,27 +428,27 @@
                       <div class="row">
                           <div class="col-md-12 mb-3">
                               <div class="form-group">
-                                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                                  <input type="text" name="name" class="form-control" placeholder="Your Name" data-i18n-placeholder="form.name" required>
                               </div>
                           </div>
                           <div class="col-md-12 mb-3">
                               <div class="form-group">
-                                  <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                                  <input type="email" name="email" class="form-control" placeholder="Your Email" data-i18n-placeholder="form.email" required>
                               </div>
                           </div>
                           <div class="col-md-12 mb-3">
                               <div class="form-group">
-                                  <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                                  <input type="text" name="subject" class="form-control" placeholder="Subject" data-i18n-placeholder="form.subject" required>
                               </div>
                           </div>
                           <div class="col-md-12 mb-3">
                               <div class="form-group">
-                                  <textarea name="message" class="form-control" rows="5" placeholder="Message" required></textarea>
+                                  <textarea name="message" class="form-control" rows="5" placeholder="Message" data-i18n-placeholder="form.message" required></textarea>
                               </div>
                           </div>
                           <div class="col-md-12 text-center">
-                            <div id="loading" class="loader" style="display: none;"></div>
-                            <button type="submit" id="submitBtn" class="button button-a button-big button-rouded">Send Message</button>
+              <div id="loading" class="loader" style="display: none;"></div>
+              <button type="submit" id="submitBtn" class="button button-a button-big button-rouded" data-i18n="form.send">Send Message</button>
                         </div>
                       </div>
                   </form>
@@ -455,12 +457,12 @@
                 </div>
                 <div class="col-md-6">
                   <div class="title-box-2 pt-4 pt-md-0">
-                    <h5 class="title-left">
+                    <h5 class="title-left" data-i18n="contact.get">
                       Get in Touch
                     </h5>
                   </div>
                   <div class="more-info">
-                    <p class="lead">
+                    <p class="lead" data-i18n="contact.p">
                       Feel free to contact me if you have any questions, ideas for collaboration or if you just want to say hello, thank you very much for visiting my Portfolio.
                     </p>
                     <ul class="list-ico">
@@ -515,6 +517,10 @@
   <script src="lib/lightbox/js/lightbox.min.js"></script>
   <script src="lib/typed/typed.min.js"></script>
   <script src="contactform/contactform.js"></script>
+  <!-- i18n (language toggle) -->
+  <script src="js/i18n.js"></script>
+  <!-- Unique microinteraction script -->
+  <script src="js/unique.js"></script>
   <script src="js/main.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {

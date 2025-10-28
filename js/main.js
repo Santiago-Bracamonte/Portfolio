@@ -1,107 +1,165 @@
-(function ($) {
-	"use strict";
-	var nav = $('nav');
-  var navHeight = nav.outerHeight();
-  
-  $('.navbar-toggler').on('click', function() {
-    if( ! $('#mainNav').hasClass('navbar-reduce')) {
-      $('#mainNav').addClass('navbar-reduce');
-    }
-  })
+"use strict";
 
-  // Preloader
-  $(window).on('load', function () {
-    if ($('#preloader').length) {
-      $('#preloader').delay(100).fadeOut('slow', function () {
-        $(this).remove();
-      });
+// Espera que todo el DOM esté cargado
+document.addEventListener("DOMContentLoaded", () => {
+
+  const nav = document.querySelector("nav");
+  const navHeight = nav.offsetHeight;
+
+  // --- Navbar toggler (modo responsive) ---
+  const navbarToggler = document.querySelector(".navbar-toggler");
+  const mainNav = document.getElementById("mainNav");
+
+  if (navbarToggler && mainNav) {
+    navbarToggler.addEventListener("click", () => {
+      if (!mainNav.classList.contains("navbar-reduce")) {
+        mainNav.classList.add("navbar-reduce");
+      }
+    });
+  }
+
+  // --- Preloader ---
+  window.addEventListener("load", () => {
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+      setTimeout(() => {
+        preloader.style.transition = "opacity 0.6s ease";
+        preloader.style.opacity = "0";
+        setTimeout(() => preloader.remove(), 600);
+      }, 100);
     }
   });
 
-  // Back to top button
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 100) {
-      $('.back-to-top').fadeIn('slow');
+  // --- Back to top button ---
+  const backToTop = document.querySelector(".back-to-top");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      backToTop?.classList.add("visible");
     } else {
-      $('.back-to-top').fadeOut('slow');
+      backToTop?.classList.remove("visible");
     }
   });
-  $('.back-to-top').click(function(){
-    $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
-    return false;
+
+  if (backToTop) {
+    backToTop.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // --- Scroll suave en links del menú ---
+  const scrollLinks = document.querySelectorAll('a.js-scroll[href^="#"]:not([href="#"])');
+  scrollLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        e.preventDefault();
+        const offsetTop = target.offsetTop - navHeight + 5;
+        window.scrollTo({ top: offsetTop, behavior: "smooth" });
+      }
+      // Cierra menú responsive si está abierto
+      document.querySelector(".navbar-collapse")?.classList.remove("show");
+    });
   });
 
-	/*--/ Star ScrollTop /--*/
-	$('.scrolltop-mf').on("click", function () {
-		$('html, body').animate({
-			scrollTop: 0
-		}, 1000);
-	});
+  // Fallback: if some specific nav anchors fail (reported for #contact), attach a direct scroll handler
+  const navContact = document.getElementById('nav-contact');
+  if (navContact) {
+    navContact.addEventListener('click', (e) => {
+      // Only run fallback if default behavior didn't scroll (prevent double handling)
+      const target = document.getElementById('contact');
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector(".navbar-collapse")?.classList.remove("show");
+    });
+  }
 
-	/*--/ Star Counter /--*/
-	$('.counter').counterUp({
-		delay: 15,
-		time: 2000
-	});
+  // --- Navbar dinámica (reduce/transparente) ---
+  const navbar = document.querySelector(".navbar-expand-md");
+  const scrollTopMf = document.querySelector(".scrolltop-mf");
+  
+  const handleScroll = () => {
+    const pixels = 50;
+    const top = 1200;
+    if (window.scrollY > pixels) {
+      navbar?.classList.add("navbar-reduce");
+      navbar?.classList.remove("navbar-trans");
+    } else {
+      navbar?.classList.add("navbar-trans");
+      navbar?.classList.remove("navbar-reduce");
+    }
+    if (window.scrollY > top) {
+      scrollTopMf?.classList.add("visible");
+    } else {
+      scrollTopMf?.classList.remove("visible");
+    }
+  };
 
-	/*--/ Star Scrolling nav /--*/
-	$('a.js-scroll[href*="#"]:not([href="#"])').on("click", function () {
-		if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-			var target = $(this.hash);
-			target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-			if (target.length) {
-				$('html, body').animate({
-					scrollTop: (target.offset().top - navHeight + 5)
-				}, 1000, "easeInOutExpo");
-				return false;
-			}
-		}
-	});
+  window.addEventListener("scroll", handleScroll);
+  handleScroll(); // Ejecuta al cargar
 
-	// Closes responsive menu when a scroll trigger link is clicked
-	$('.js-scroll').on("click", function () {
-		$('.navbar-collapse').collapse('hide');
-	});
+  // --- Botón scrolltop-mf ---
+  scrollTopMf?.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
-	// Activate scrollspy to add active class to navbar items on scroll
-	$('body').scrollspy({
-		target: '#mainNav',
-		offset: navHeight
-	});
-	/*--/ End Scrolling nav /--*/
+  // --- Efecto Typed.js (solo si la librería está incluida) ---
+  const textSlider = document.querySelector(".text-slider");
+  const textItems = document.querySelector(".text-slider-items");
+  if (textSlider && textItems && typeof Typed !== "undefined") {
+    // Only create a Typed instance if one is not already present (i18n re-inits it)
+    if (!window._typedInstance) {
+      try {
+        window._typedInstance = new Typed(".text-slider", {
+          strings: textItems.textContent.split(","),
+          typeSpeed: 80,
+          loop: true,
+          backDelay: 1100,
+          backSpeed: 30
+        });
+      } catch (e) { /* ignore init errors */ }
+    }
+  }
 
-	/*--/ Navbar Menu Reduce /--*/
-	$(window).trigger('scroll');
-	$(window).on('scroll', function () {
-		var pixels = 50; 
-		var top = 1200;
-		if ($(window).scrollTop() > pixels) {
-			$('.navbar-expand-md').addClass('navbar-reduce');
-			$('.navbar-expand-md').removeClass('navbar-trans');
-		} else {
-			$('.navbar-expand-md').addClass('navbar-trans');
-			$('.navbar-expand-md').removeClass('navbar-reduce');
-		}
-		if ($(window).scrollTop() > top) {
-			$('.scrolltop-mf').fadeIn(1000, "easeInOutExpo");
-		} else {
-			$('.scrolltop-mf').fadeOut(1000, "easeInOutExpo");
-		}
-	});
+  // --- Contador animado (versión simple sin plugin) ---
+  // Prepare counters: initialize to 0 and animate when section comes into view
+  const counters = document.querySelectorAll(".counter[data-target]");
+  counters.forEach(c => c.innerText = '0');
 
-	/*--/ Star Typed /--*/
-	if ($('.text-slider').length == 1) {
-    var typed_strings = $('.text-slider-items').text();
-		var typed = new Typed('.text-slider', {
-			strings: typed_strings.split(','),
-			typeSpeed: 80,
-			loop: true,
-			backDelay: 1100,
-			backSpeed: 30
-		});
-	}
+  const startCounters = () => {
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute("data-target") || 0;
+        const count = +counter.innerText;
+        const increment = Math.max(1, Math.floor(target / 100));
+        if (count < target) {
+          counter.innerText = Math.min(target, count + increment);
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  };
 
+  // Use IntersectionObserver to trigger counters when the section is visible
+  const counterSection = document.querySelector('.section-counter');
+  if (counterSection && counters.length) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startCounters();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    io.observe(counterSection);
+  } else {
+    // Fallback: start immediately
+    startCounters();
+  }
 
-
-	
-})(jQuery);
+});
