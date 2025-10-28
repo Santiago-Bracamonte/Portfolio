@@ -130,7 +130,7 @@
       }
     }
     const btn = document.getElementById('langToggle');
-    if(btn) btn.textContent = (lang === 'es') ? 'EN' : 'ES';
+    if(btn) btn.textContent = (lang === 'es') ? 'ES' : 'EN';
     localStorage.setItem('siteLang', lang);
   }
 
