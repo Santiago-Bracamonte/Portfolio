@@ -6,7 +6,7 @@
 
   // Reveal on scroll using IntersectionObserver
   function setupReveal(){
-    const items = document.querySelectorAll('.work-box');
+    const items = document.querySelectorAll('.work-box, .service-box, .about-mf .box-shadow-full, .contact-mf #contact');
     if(!items.length) return;
 
     const io = new IntersectionObserver((entries)=>{
@@ -25,7 +25,7 @@
   function setupTilt(){
     // Disable tilt on touch devices to avoid accidental transforms
     if(('ontouchstart' in window) || navigator.maxTouchPoints > 0) return;
-    const cards = document.querySelectorAll('.work-box.interactive');
+    const cards = document.querySelectorAll('.work-box.interactive, .service-box');
     cards.forEach(card=>{
       card.addEventListener('mousemove', e=>{
         const rect = card.getBoundingClientRect();
@@ -42,6 +42,43 @@
         card.style.transition = 'transform .16s ease';
         setTimeout(()=> card.style.transition = '', 200);
       });
+    });
+  }
+
+  // Magnetic hover effect for key buttons
+  function setupMagneticButtons(){
+    if(('ontouchstart' in window) || navigator.maxTouchPoints > 0) return;
+    const buttons = document.querySelectorAll('.btn-unique, .btn-secondary-unique, #submitBtn');
+    buttons.forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        btn.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
+  // Contact card parallax based on cursor position
+  function setupContactParallax(){
+    if(('ontouchstart' in window) || navigator.maxTouchPoints > 0) return;
+    const contactCard = document.querySelector('.contact-mf #contact.box-shadow-full');
+    if(!contactCard) return;
+
+    contactCard.addEventListener('mousemove', e => {
+      const rect = contactCard.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) - 0.5;
+      const y = ((e.clientY - rect.top) / rect.height) - 0.5;
+      const rx = (-y) * 4;
+      const ry = x * 5;
+      contactCard.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+
+    contactCard.addEventListener('mouseleave', () => {
+      contactCard.style.transform = '';
     });
   }
 
@@ -82,6 +119,8 @@
   document.addEventListener('DOMContentLoaded', function(){
     setupReveal();
     setupTilt();
+    setupMagneticButtons();
+    setupContactParallax();
     setupRipple();
   });
 

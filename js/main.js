@@ -62,19 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Fallback: if some specific nav anchors fail (reported for #contact), attach a direct scroll handler
-  const navContact = document.getElementById('nav-contact');
-  if (navContact) {
-    navContact.addEventListener('click', (e) => {
-      // Only run fallback if default behavior didn't scroll (prevent double handling)
-      const target = document.getElementById('contact');
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      document.querySelector(".navbar-collapse")?.classList.remove("show");
-    });
-  }
-
   // --- Navbar dinámica (reduce/transparente) ---
   const navbar = document.querySelector(".navbar-expand-md");
   const scrollTopMf = document.querySelector(".scrolltop-mf");
@@ -108,58 +95,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Efecto Typed.js (solo si la librería está incluida) ---
   const textSlider = document.querySelector(".text-slider");
   const textItems = document.querySelector(".text-slider-items");
-  if (textSlider && textItems && typeof Typed !== "undefined") {
-    // Only create a Typed instance if one is not already present (i18n re-inits it)
-    if (!window._typedInstance) {
-      try {
-        window._typedInstance = new Typed(".text-slider", {
-          strings: textItems.textContent.split(","),
-          typeSpeed: 80,
-          loop: true,
-          backDelay: 1100,
-          backSpeed: 30
-        });
-      } catch (e) { /* ignore init errors */ }
-    }
+  if (textSlider && textItems && typeof Typed !== "undefined" && !window._typedInstance) {
+    window._typedInstance = new Typed(".text-slider", {
+      strings: textItems.textContent.split(","),
+      typeSpeed: 80,
+      loop: true,
+      backDelay: 1100,
+      backSpeed: 30
+    });
   }
 
   // --- Contador animado (versión simple sin plugin) ---
-  // Prepare counters: initialize to 0 and animate when section comes into view
-  const counters = document.querySelectorAll(".counter[data-target]");
-  counters.forEach(c => c.innerText = '0');
-
-  const startCounters = () => {
-    counters.forEach(counter => {
-      const updateCount = () => {
-        const target = +counter.getAttribute("data-target") || 0;
-        const count = +counter.innerText;
-        const increment = Math.max(1, Math.floor(target / 100));
-        if (count < target) {
-          counter.innerText = Math.min(target, count + increment);
-          setTimeout(updateCount, 20);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      updateCount();
-    });
-  };
-
-  // Use IntersectionObserver to trigger counters when the section is visible
-  const counterSection = document.querySelector('.section-counter');
-  if (counterSection && counters.length) {
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          startCounters();
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(counterSection);
-  } else {
-    // Fallback: start immediately
-    startCounters();
-  }
+  const counters = document.querySelectorAll(".counter");
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute("data-target");
+      const count = +counter.innerText;
+      const increment = target / 100;
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 15);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
 
 });
