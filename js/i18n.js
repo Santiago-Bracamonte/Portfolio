@@ -1,9 +1,8 @@
-// i18n.js
-// Simple client-side toggle between English and Spanish using data-i18n attributes
+
 (function(){
   'use strict';
 
-  const translations = {
+  var translations = {
     es: {
       'nav.home':'Inicio',
       'nav.about':'Sobre mí',
@@ -15,8 +14,8 @@
       'about.title':'Sobre mí',
       'about.p1':'Estudiante de Analista de Sistemas con una fuerte pasión por el desarrollo de software. Busco aplicar mis habilidades técnicas en un rol de desarrollador. Mi experiencia corporativa actual en optimización de procesos y análisis de datos me da un enfoque único para resolver problemas empresariales con tecnología.',
       'about.p2':'Siempre busco expandir mis conocimientos y mejorar mis habilidades técnicas. Recientemente realicé cursos en línea como "SQL for Data Science" y "Technical Support Fundamentals" en Coursera para mantenerme actualizado con las últimas tendencias de la industria.',
-  'about.p3':'Mi competencia técnica abarca una amplia gama de lenguajes de programación y herramientas. Tengo experiencia con frameworks como Laravel y experiencia sólida tanto en Visual Studio como en entornos Linux, lo que me permite abordar cualquier proyecto con un enfoque versátil.',
-  'hero.skills':'Desarrollador Web,Diseñador Web,FullStack Developer',
+      'about.p3':'Mi competencia técnica abarca una amplia gama de lenguajes de programación y herramientas. Tengo experiencia con frameworks como Laravel y experiencia sólida tanto en Visual Studio como en entornos Linux, lo que me permite abordar cualquier proyecto con un enfoque versátil.',
+      'hero.skills':'Desarrollador Web,Diseñador Web,FullStack Developer',
       'services.title':'Servicios',
       'services.subtitle':'Soluciones de alta calidad para cubrir tus necesidades tecnológicas.',
       'services.webdesign':'Diseño Web',
@@ -46,9 +45,9 @@
       'projects.hospital.desc':'Aplicación móvil para gestión de pacientes, citas y registros médicos con interfaz intuitiva.',
       'projects.portfolio.title':'Portfolio Personal',
       'projects.portfolio.desc':'Sitio web de portfolio responsivo que muestra proyectos y habilidades con diseño moderno y animaciones.',
-  'counters.works':'TRABAJOS COMPLETADOS',
-  'counters.years':'AÑOS DE EXPERIENCIA',
-  'counters.clients':'CLIENTES',
+      'counters.works':'TRABAJOS COMPLETADOS',
+      'counters.years':'AÑOS DE EXPERIENCIA',
+      'counters.clients':'CLIENTES',
       'contact.send':'Enviar Mensaje',
       'contact.get':'Ponte en Contacto',
       'contact.p':'Contáctame si tienes preguntas o ideas para colaborar. Gracias por visitar mi Portfolio.',
@@ -56,9 +55,16 @@
       'form.email':'Tu email',
       'form.subject':'Asunto',
       'form.message':'Mensaje',
-      'form.send':'Enviar Mensaje'
-    }
-    ,
+      'form.send':'Enviar Mensaje',
+      'form.error.name':'Por favor ingresa tu nombre (mínimo 2 caracteres).',
+      'form.error.email':'Por favor ingresa un email válido.',
+      'form.error.subject':'Por favor ingresa un asunto (mínimo 2 caracteres).',
+      'form.error.message':'Por favor ingresa un mensaje (mínimo 10 caracteres).',
+      'form.success':'✓ ¡Mensaje enviado con éxito!',
+      'form.error.generic':'✗ Error al enviar el mensaje. Por favor intenta de nuevo.',
+      'form.error.timeout':'✓ La solicitud tardó demasiado. Por favor intenta de nuevo.',
+      'form.error.network':'✓ Error de red. Verifica tu conexión.'
+    },
     en: {
       'nav.home':'Home',
       'nav.about':'About me',
@@ -70,7 +76,7 @@
       'hero.skills':'Web Developer,Web Designer,FullStack Developer',
       'about.title':'About me',
       'about.p1':'Advanced Systems Analyst student with a strong passion for software development. I am looking to apply my technical skills in a developer role. My current corporate experience in process optimization and data analysis gives me a unique approach to solving business problems with technology.',
-      'about.p2':'I am always looking to expand my knowledge and enhance my technical abilities. Recently, I have completed several online courses, including \"SQL for Data Science\" and \"Technical Support Fundamentals\" on Coursera, to further improve my skills and keep up with the latest industry trends.',
+      'about.p2':'I am always looking to expand my knowledge and enhance my technical abilities. Recently, I have completed several online courses, including "SQL for Data Science" and "Technical Support Fundamentals" on Coursera, to further improve my skills and keep up with the latest industry trends.',
       'about.p3':'My technical proficiency spans a wide range of programming languages and tools. I am skilled in frameworks such as Laravel and have solid experience with both Visual Studio and Linux environments, ensuring I can tackle any project with a versatile approach.',
       'services.title':'Services',
       'services.subtitle':'High-quality solutions to meet your technological needs.',
@@ -111,35 +117,63 @@
       'form.send':'Send Message',
       'counters.works':'WORKS COMPLETED',
       'counters.years':'YEARS OF EXPERIENCE',
-      'counters.clients':'TOTAL CLIENTS'
+      'counters.clients':'TOTAL CLIENTS',
+      'form.error.name':'Please enter your name (min 2 characters).',
+      'form.error.email':'Please enter a valid email address.',
+      'form.error.subject':'Please enter a subject (min 2 characters).',
+      'form.error.message':'Please enter a message (min 10 characters).',
+      'form.success':'✓ Message sent successfully!',
+      'form.error.generic':'✗ Error sending message. Please try again.',
+      'form.error.timeout':'✗ Request timed out. Please try again.',
+      'form.error.network':'✗ Network error. Check your connection.'
     }
   };
 
+  function updateDocumentLanguage(lang) {
+    document.documentElement.setAttribute('lang', lang === 'es' ? 'es' : 'en');
+    var toggle = document.getElementById('langToggle');
+    if (toggle) {
+      toggle.setAttribute('data-current-lang', lang);
+      toggle.setAttribute('aria-label', lang === 'es'
+        ? 'Cambiar idioma. Idioma actual: Español'
+        : 'Change language. Current language: English');
+    }
+  }
+
   function applyLang(lang){
-    const dict = translations[lang] || {};
-    document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const key = el.getAttribute('data-i18n');
+    var dict = translations[lang] || {};
+    window.i18n = dict; // Expose for contact-config.js
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
       if(dict[key]) el.textContent = dict[key];
     });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-      const key = el.getAttribute('data-i18n-placeholder');
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-placeholder');
+
+      // En campos con floating label el placeholder debe quedar " " para no duplicar texto.
+      if (el.closest('.floating-label')) {
+        el.setAttribute('placeholder', ' ');
+        return;
+      }
+
       if(dict[key]) el.setAttribute('placeholder', dict[key]);
     });
-    // update typed.js items if present
-    const skillsKey = dict['hero.skills'];
+    // Update floating labels
+    document.querySelectorAll('.floating-label label[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if(dict[key]) el.textContent = dict[key];
+    });
+    // Update typed.js
+    var skillsKey = dict['hero.skills'];
     if(skillsKey){
-      const sliderItems = document.querySelector('.text-slider-items');
+      var sliderItems = document.querySelector('.text-slider-items');
       if(sliderItems){
         sliderItems.textContent = skillsKey;
-        // re-init Typed if available
-        if(typeof Typed !== 'undefined'){
-          // destroy previous typed (if any) by replacing node
-          const old = document.querySelector('.text-slider');
-          if(old){
-            old.innerHTML = '';
-          }
+        if (typeof window.initHeroTyped === 'function') {
+          window.initHeroTyped(sliderItems.textContent);
+        } else if(typeof Typed !== 'undefined'){
+          // Fallback por si main.js todavia no registro el helper.
           try{
-            // Destroy previous instance if exists to avoid stacking timers (prevents acceleration bug)
             if (window._typedInstance && typeof window._typedInstance.destroy === 'function') {
               try { window._typedInstance.destroy(); } catch(e) { /* ignore */ }
               window._typedInstance = null;
@@ -149,26 +183,27 @@
               typeSpeed: 80,
               loop: true,
               backDelay: 1100,
-              backSpeed: 30
+              backSpeed: 30,
+              cursorChar: '|',
+              smartBackspace: true
             });
           }catch(e){/* ignore typed init errors */}
         }
       }
     }
-    const btn = document.getElementById('langToggle');
-    if(btn) btn.textContent = (lang === 'es') ? 'ES' : 'EN';
+    updateDocumentLanguage(lang);
     localStorage.setItem('siteLang', lang);
   }
 
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const saved = localStorage.getItem('siteLang') || 'en';
+  document.addEventListener('DOMContentLoaded', function(){
+    var saved = localStorage.getItem('siteLang') || 'en';
     applyLang(saved);
 
-    const btn = document.getElementById('langToggle');
+    var btn = document.getElementById('langToggle');
     if(btn){
-      btn.addEventListener('click', ()=>{
-        const current = localStorage.getItem('siteLang') || 'en';
-        const next = (current === 'es') ? 'en' : 'es';
+      btn.addEventListener('click', function(){
+        var current = localStorage.getItem('siteLang') || 'en';
+        var next = (current === 'es') ? 'en' : 'es';
         applyLang(next);
       });
     }

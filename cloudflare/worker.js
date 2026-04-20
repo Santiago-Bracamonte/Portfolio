@@ -1,5 +1,6 @@
 export default {
   async fetch(request, env) {
+    // CORS centralizado para permitir que el frontend estatico consuma el endpoint.
     const corsHeaders = {
       "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN || "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -18,6 +19,7 @@ export default {
       const body = await request.json();
       const { from_name, from_email, subject, message } = body || {};
 
+      // Validacion minima para evitar requests incompletos.
       if (!from_name || !from_email || !subject || !message) {
         return json({ error: "Missing required fields" }, 400, corsHeaders);
       }
@@ -29,6 +31,7 @@ export default {
 
       const fromEmail = env.CONTACT_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
 
+      // Se aplica slicing para limitar tamano y reducir superficie de abuso.
       const resendResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -65,6 +68,7 @@ export default {
 
       return json({ ok: true }, 200, corsHeaders);
     } catch (error) {
+      // Respuesta neutra para no exponer detalles internos al cliente.
       return json({ error: "Internal server error" }, 500, corsHeaders);
     }
   }

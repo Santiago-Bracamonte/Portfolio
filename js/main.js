@@ -1,125 +1,109 @@
-"use strict";
 
-// Espera que todo el DOM esté cargado
-document.addEventListener("DOMContentLoaded", () => {
 
-  const nav = document.querySelector("nav");
-  const navHeight = nav.offsetHeight;
+(function($) {
+  "use strict";
 
-  // --- Navbar toggler (modo responsive) ---
-  const navbarToggler = document.querySelector(".navbar-toggler");
-  const mainNav = document.getElementById("mainNav");
-
-  if (navbarToggler && mainNav) {
-    navbarToggler.addEventListener("click", () => {
-      if (!mainNav.classList.contains("navbar-reduce")) {
-        mainNav.classList.add("navbar-reduce");
-      }
-    });
-  }
-
-  // --- Preloader ---
-  window.addEventListener("load", () => {
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-      setTimeout(() => {
-        preloader.style.transition = "opacity 0.6s ease";
-        preloader.style.opacity = "0";
-        setTimeout(() => preloader.remove(), 600);
-      }, 100);
+  function initHeroTyped(stringsCsv) {
+    if (typeof Typed === 'undefined' || $('.text-slider').length !== 1) {
+      return;
     }
-  });
 
-  // --- Back to top button ---
-  const backToTop = document.querySelector(".back-to-top");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 100) {
-      backToTop?.classList.add("visible");
-    } else {
-      backToTop?.classList.remove("visible");
+    // Evita instancias duplicadas que aceleran o rompen la animacion.
+    if (window._typedInstance && typeof window._typedInstance.destroy === 'function') {
+      try { window._typedInstance.destroy(); } catch (e) { /* ignore */ }
+      window._typedInstance = null;
     }
-  });
 
-  if (backToTop) {
-    backToTop.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
+    var strings = (stringsCsv || '').split(',').map(function(item) {
+      return item.trim();
+    }).filter(Boolean);
 
-  // --- Scroll suave en links del menú ---
-  const scrollLinks = document.querySelectorAll('a.js-scroll[href^="#"]:not([href="#"])');
-  scrollLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      const target = document.querySelector(link.getAttribute("href"));
-      if (target) {
-        e.preventDefault();
-        const offsetTop = target.offsetTop - navHeight + 5;
-        window.scrollTo({ top: offsetTop, behavior: "smooth" });
-      }
-      // Cierra menú responsive si está abierto
-      document.querySelector(".navbar-collapse")?.classList.remove("show");
-    });
-  });
+    if (!strings.length) return;
 
-  // --- Navbar dinámica (reduce/transparente) ---
-  const navbar = document.querySelector(".navbar-expand-md");
-  const scrollTopMf = document.querySelector(".scrolltop-mf");
-  
-  const handleScroll = () => {
-    const pixels = 50;
-    const top = 1200;
-    if (window.scrollY > pixels) {
-      navbar?.classList.add("navbar-reduce");
-      navbar?.classList.remove("navbar-trans");
-    } else {
-      navbar?.classList.add("navbar-trans");
-      navbar?.classList.remove("navbar-reduce");
-    }
-    if (window.scrollY > top) {
-      scrollTopMf?.classList.add("visible");
-    } else {
-      scrollTopMf?.classList.remove("visible");
-    }
-  };
-
-  window.addEventListener("scroll", handleScroll);
-  handleScroll(); // Ejecuta al cargar
-
-  // --- Botón scrolltop-mf ---
-  scrollTopMf?.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  // --- Efecto Typed.js (solo si la librería está incluida) ---
-  const textSlider = document.querySelector(".text-slider");
-  const textItems = document.querySelector(".text-slider-items");
-  if (textSlider && textItems && typeof Typed !== "undefined" && !window._typedInstance) {
-    window._typedInstance = new Typed(".text-slider", {
-      strings: textItems.textContent.split(","),
+    window._typedInstance = new Typed('.text-slider', {
+      strings: strings,
       typeSpeed: 80,
       loop: true,
       backDelay: 1100,
-      backSpeed: 30
+      backSpeed: 30,
+      cursorChar: '|',
+      smartBackspace: true
     });
   }
 
-  // --- Contador animado (versión simple sin plugin) ---
-  const counters = document.querySelectorAll(".counter");
-  counters.forEach(counter => {
-    const updateCount = () => {
-      const target = +counter.getAttribute("data-target");
-      const count = +counter.innerText;
-      const increment = target / 100;
-      if (count < target) {
-        counter.innerText = Math.ceil(count + increment);
-        setTimeout(updateCount, 15);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    updateCount();
+  // Lo exponemos para reusar la misma inicializacion cuando cambia el idioma.
+  window.initHeroTyped = initHeroTyped;
+
+  // ===== PRELOADER =====
+  $(window).on('load', function() {
+    if ($('#preloader').length) {
+      $('#preloader').delay(800).fadeOut('slow', function() {
+        $(this).remove();
+      });
+    }
   });
 
-});
+  // ===== TYPED.JS =====
+  if ($('.text-slider').length === 1) {
+    var typedStrings = $('.text-slider-items').text();
+    initHeroTyped(typedStrings);
+  }
+
+  // ===== SMOOTH SCROLL =====
+  $('a.js-scroll[href*="#"]').on('click', function(e) {
+    e.preventDefault();
+    var target = $(this.hash);
+    if (target.length) {
+      $('html, body').animate({
+        scrollTop: target.offset().top - 70
+      }, 1000, 'easeInOutExpo');
+    }
+  });
+
+  // ===== SCROLLSpy =====
+  $('body').scrollspy({
+    target: '#mainNav',
+    offset: 80
+  });
+
+  // ===== COLLAPSE NAVBAR ON CLICK =====
+  $('.navbar-nav>li>a').on('click', function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+
+  // ===== COUNTERS WITH ODOMETER EFFECT =====
+  var countersTriggered = false;
+  function animateCounters() {
+    if (countersTriggered) return;
+    var counterSection = $('.section-counter');
+    if (counterSection.length) {
+      var rect = counterSection[0].getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        countersTriggered = true;
+        $('.odometer').each(function() {
+          var $this = $(this);
+          var target = parseInt($this.data('target'), 10);
+          var duration = 2000;
+          var startTime = null;
+          function updateCounter(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var easeOut = 1 - Math.pow(1 - progress, 3);
+            $this.text(Math.floor(easeOut * target));
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            }
+          }
+          requestAnimationFrame(updateCounter);
+        });
+      }
+    }
+  }
+  $(window).on('scroll', animateCounters);
+  animateCounters();
+
+  // ===== YEAR =====
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+})(jQuery);
