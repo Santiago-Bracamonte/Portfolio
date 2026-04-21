@@ -1,6 +1,18 @@
-
 (function() {
   'use strict';
+
+  // ============================================================
+  // 0. PRELOADER RAPIDO
+  // ============================================================
+  window.addEventListener('load', function() {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.classList.add('hidden');
+      setTimeout(function() {
+        preloader.style.display = 'none';
+      }, 300);
+    }
+  });
 
   // ============================================================
   // 1. PARTICLE NETWORK (Hero Canvas)
@@ -21,15 +33,15 @@
 
     function createParticles() {
       particles = [];
-      var count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      var count = Math.min(60, Math.floor((canvas.width * canvas.height) / 20000));
       for (var i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.5 + 0.2
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          radius: Math.random() * 1.8 + 0.8,
+          opacity: Math.random() * 0.4 + 0.2
         });
       }
     }
@@ -53,22 +65,22 @@
           var dx = mouse.x - p.x;
           var dy = mouse.y - p.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
-            var force = (150 - dist) / 150;
-            p.vx -= (dx / dist) * force * 0.02;
-            p.vy -= (dy / dist) * force * 0.02;
+          if (dist < 120) {
+            var force = (120 - dist) / 120;
+            p.vx -= (dx / dist) * force * 0.03;
+            p.vy -= (dy / dist) * force * 0.03;
           }
         }
 
         // Dampen velocity
-        p.vx *= 0.999;
-        p.vy *= 0.999;
+        p.vx *= 0.998;
+        p.vy *= 0.998;
 
         // Clamp velocity
         var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (speed > 1.5) {
-          p.vx = (p.vx / speed) * 1.5;
-          p.vy = (p.vy / speed) * 1.5;
+        if (speed > 2) {
+          p.vx = (p.vx / speed) * 2;
+          p.vy = (p.vy / speed) * 2;
         }
 
         // Draw particle
@@ -84,8 +96,8 @@
           var dx = particles[i].x - particles[j].x;
           var dy = particles[i].y - particles[j].y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            var opacity = (1 - dist / 120) * 0.2;
+          if (dist < 100) {
+            var opacity = (1 - dist / 100) * 0.15;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -118,7 +130,7 @@
         isVisible = entry.isIntersecting;
         if (isVisible && !animationId) drawParticles();
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
     heroObserver.observe(canvas);
 
     // Init
@@ -142,8 +154,8 @@
       var y = e.clientY - rect.top;
       var centerX = rect.width / 2;
       var centerY = rect.height / 2;
-      var rotateX = (y - centerY) / centerY * -8;
-      var rotateY = (x - centerX) / centerX * 8;
+      var rotateX = (y - centerY) / centerY * -6;
+      var rotateY = (x - centerX) / centerX * 6;
       card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-6px)';
 
       // Update shine position
@@ -162,7 +174,7 @@
   });
 
   // ============================================================
-  // 3. SCROLL REVEAL (Intersection Observer)
+  // 3. SCROLL REVEAL (Intersection Observer) - MAS RAPIDO
   // ============================================================
   var revealElements = document.querySelectorAll('.reveal, .reveal-text, .service-box, .counter-box, .work-box, .glass-project');
 
@@ -174,8 +186,8 @@
       }
     });
   }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px -30px 0px'
   });
 
   revealElements.forEach(function(el, index) {

@@ -1,6 +1,4 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --bg-1: #0b0714;
@@ -25,7 +23,7 @@ html, body {
   height: 100%;
   background: var(--section-bg);
   color: var(--text);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
@@ -112,7 +110,7 @@ html, body {
   50% { transform: translate(-40%, -60%) scale(1.15); }
 }
 
-/* ========== PRELOADER ========== */
+/* ========== PRELOADER - RAPIDO ========== */
 #preloader {
   position: fixed;
   top: 0; left: 0;
@@ -122,15 +120,15 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 #preloader::after {
   content: '';
-  width: 48px; height: 48px;
+  width: 40px; height: 40px;
   border: 3px solid var(--glass-border);
   border-top-color: var(--accent);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .no-js #preloader { display: none !important; }
@@ -149,7 +147,7 @@ html, body {
   box-shadow: 0 4px 30px rgba(0,0,0,0.3);
 }
 .navbar-brand {
-  font-family: 'Poppins', system-ui, sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   font-weight: 900;
   letter-spacing: 1px;
   color: var(--accent) !important;
@@ -183,11 +181,15 @@ html, body {
   width: 60%;
 }
 
-/* ========== HERO ========== */
+/* ========== HERO CON INTRO-BG ========== */
 .intro.route.bg-image {
   position: relative;
   background-color: var(--bg-1);
-  background-image: none !important;
+  background-image: url(../img/intro-bg.jpg) !important;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow: hidden;
 }
 #particle-canvas {
@@ -197,7 +199,7 @@ html, body {
   z-index: 1;
 }
 .intro.route.bg-image .overlay-itro {
-  background: linear-gradient(180deg, rgba(11,7,20,0.3) 0%, rgba(15,20,28,0.6) 100%);
+  background: linear-gradient(180deg, rgba(11,7,20,0.5) 0%, rgba(15,20,28,0.75) 100%);
   z-index: 2;
 }
 .intro-content {
@@ -205,11 +207,11 @@ html, body {
   z-index: 3;
 }
 .intro-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3.8rem);
-  letter-spacing: -1px;
-  line-height: 1.15;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  letter-spacing: -2px;
+  line-height: 1.1;
   text-align: center;
 }
 .gradient-text {
@@ -229,10 +231,13 @@ html, body {
   text-align: center;
   font-size: 1.3rem;
   color: var(--muted);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
 }
 .text-slider {
   color: var(--accent);
   font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
 }
 .typed-cursor {
   color: var(--accent);
@@ -250,6 +255,7 @@ html, body {
   border-radius: 50px;
   box-shadow: 0 0 25px rgba(45,212,191,0.35), 0 4px 15px rgba(0,0,0,0.3);
   transition: var(--transition-smooth);
+  font-family: 'Outfit', sans-serif;
 }
 .cv-btn-glow:hover {
   transform: translateY(-2px);
@@ -266,6 +272,7 @@ html, body {
   color: var(--text) !important;
   padding: 0.75rem 1.25rem;
   transition: var(--transition-smooth);
+  font-family: 'Outfit', sans-serif;
 }
 .dropdown-item:hover {
   background: rgba(45,212,191,0.1) !important;
@@ -351,6 +358,7 @@ html, body {
 .title-s {
   color: var(--accent);
   font-weight: 600;
+  font-family: 'Outfit', sans-serif;
 }
 .about-info a {
   color: var(--accent-2);
@@ -401,13 +409,14 @@ html, body {
   color: var(--muted);
   text-align: center;
   font-weight: 500;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-/* Reveal text animations */
+/* Reveal text animations - MAS RAPIDO */
 .reveal-text {
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .reveal-text.visible {
   opacity: 1;
@@ -416,7 +425,7 @@ html, body {
 
 /* ========== SECTION TITLES ========== */
 .section-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 800;
   font-size: 2.5rem;
   text-transform: uppercase;
@@ -437,11 +446,15 @@ html, body {
   border-radius: 2px;
 }
 
-/* ========== SERVICES ========== */
-.services-grid { perspective: 1000px; }
+/* ========== SERVICES - TAMANOS UNIFORMES ========== */
+.services-grid { 
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .services-grid > [class*="col-"] {
   display: flex;
+  margin-bottom: 1.5rem;
 }
 
 .service-box {
@@ -456,7 +469,7 @@ html, body {
   overflow: hidden;
   transform-style: preserve-3d;
   width: 100%;
-  height: 100%;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -498,7 +511,7 @@ html, body {
   color: var(--accent);
 }
 .s-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   text-transform: uppercase;
@@ -533,78 +546,185 @@ html, body {
   justify-content: center;
 }
 
-/* ========== COUNTERS ========== */
+/* ==========================================
+   COUNTERS SECTION - REDISENADA Y ALINEADA
+   ========================================== */
+
 .section-counter {
   position: relative;
   overflow: hidden;
+  padding: 5rem 0;
 }
+
 .section-counter .overlay-mf {
-  background: linear-gradient(135deg, rgba(11,7,20,0.85), rgba(15,27,35,0.9));
-}
-.counters-row { position: relative; z-index: 2; }
-
-.counters-row > [class*="col-"] {
-  display: flex;
+  background: linear-gradient(135deg, rgba(11,7,20,0.92), rgba(15,27,35,0.95));
 }
 
-.counter-box {
-  text-align: center;
-  padding: 2rem;
-  width: 100%;
-  min-height: 220px;
+.counters-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.counters-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.counter-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-.counter {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: 3.5rem;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-.counter-text {
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.counter-num {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: nowrap;
-}
-
-.pulse-ring {
+  justify-content: flex-start;
+  text-align: center;
+  padding: 2rem 1.5rem;
   position: relative;
 }
-.pulse-ring::before {
+
+/* Separadores verticales entre items */
+.counter-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background: linear-gradient(180deg, transparent, var(--glass-border), transparent);
+}
+
+.counter-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(45,212,191,0.12), rgba(96,165,250,0.08));
+  border: 1px solid rgba(45,212,191,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.counter-item:hover .counter-icon-wrap {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(45,212,191,0.2);
+  border-color: rgba(45,212,191,0.4);
+}
+
+.counter-icon-wrap i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+/* Glow pulse behind icon */
+.counter-icon-wrap::before {
   content: '';
   position: absolute;
   inset: -4px;
-  border-radius: 50%;
+  border-radius: 24px;
   border: 2px solid var(--accent);
   opacity: 0;
-  animation: pulseRing 2.5s ease infinite;
-}
-@keyframes pulseRing {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.3); opacity: 0; }
+  animation: iconPulse 2.5s ease infinite;
 }
 
-/* Odometer effect */
-.odometer {
-  display: inline-block;
+@keyframes iconPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+.counter-number {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   font-variant-numeric: tabular-nums;
+  min-height: 3.2rem;
+  display: flex;
+  align-items: center;
 }
 
-/* ========== PROJECTS ========== */
+.counter-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.4;
+  min-height: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive counters */
+@media (max-width: 767px) {
+  .counters-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .counter-item:not(:last-child)::after {
+    display: none;
+  }
+
+  .counter-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .counter-item:last-child {
+    border-bottom: none;
+  }
+
+  .counter-number {
+    font-size: 2.5rem;
+    min-height: 2.5rem;
+  }
+
+  .counter-label {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .counter-number {
+    font-size: 2rem;
+    min-height: 2rem;
+  }
+
+  .counter-icon-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+  }
+
+  .counter-icon-wrap i {
+    font-size: 1.3rem;
+  }
+}
+
+/* ========== PROJECTS - TAMANOS UNIFORMES ========== */
+.project-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.project-grid > [class*="col-"] {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
 .glass-project {
   position: relative;
   background: var(--card-bg);
@@ -613,6 +733,10 @@ html, body {
   border-radius: 20px;
   overflow: hidden;
   transition: var(--transition-smooth);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
 }
 .glass-project:hover {
   border-color: rgba(45,212,191,0.4);
@@ -623,10 +747,13 @@ html, body {
   position: relative;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
+  width: 100%;
+  height: 220px;
+  flex-shrink: 0;
 }
 .work-img img {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -660,9 +787,12 @@ html, body {
 
 .work-content {
   padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .w-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--accent);
@@ -673,6 +803,7 @@ html, body {
   font-size: 0.85rem;
   line-height: 1.5;
   margin-bottom: 1rem;
+  flex: 1;
 }
 .tech-stack {
   display: flex;
@@ -705,6 +836,7 @@ html, body {
   display: flex;
   gap: 0.75rem;
   justify-content: center;
+  margin-top: auto;
 }
 .btn-screenshots {
   background: transparent;
@@ -716,6 +848,7 @@ html, body {
   font-weight: 500;
   transition: var(--transition-smooth);
   cursor: pointer;
+  font-family: 'Outfit', sans-serif;
 }
 .btn-screenshots:hover {
   border-color: var(--accent-2);
@@ -731,6 +864,7 @@ html, body {
   font-size: 0.8rem;
   font-weight: 600;
   transition: var(--transition-smooth);
+  font-family: 'Outfit', sans-serif;
 }
 .btn-unique:hover {
   transform: translateY(-2px);
@@ -762,6 +896,7 @@ html, body {
   color: var(--text);
   font-size: 0.95rem;
   transition: var(--transition-smooth);
+  font-family: 'Outfit', sans-serif;
 }
 .floating-label input:focus,
 .floating-label textarea:focus {
@@ -779,6 +914,7 @@ html, body {
   font-size: 0.95rem;
   pointer-events: none;
   transition: all 0.25s ease;
+  font-family: 'Outfit', sans-serif;
 }
 .floating-label textarea ~ label {
   top: 1.5rem;
@@ -820,6 +956,7 @@ html, body {
   font-size: 1rem !important;
   box-shadow: 0 0 25px rgba(45,212,191,0.3);
   transition: var(--transition-smooth);
+  font-family: 'Outfit', sans-serif;
 }
 .btn-glow:hover {
   transform: translateY(-2px);
@@ -832,6 +969,7 @@ html, body {
   gap: 0.75rem;
   margin-bottom: 0.75rem;
   color: var(--muted);
+  font-family: 'Outfit', sans-serif;
 }
 .contact-icon {
   width: 36px; height: 36px;
@@ -871,11 +1009,13 @@ footer {
 .copyright {
   color: var(--muted);
   font-size: 0.85rem;
+  font-family: 'Outfit', sans-serif;
 }
 .credits {
   color: var(--muted);
   opacity: 0.6;
   font-size: 0.8rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* ========== MODALS ========== */
@@ -891,7 +1031,7 @@ footer {
 }
 .glass-modal .modal-title {
   color: var(--accent);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
 }
 .glass-modal .close {
@@ -920,21 +1060,22 @@ footer {
   opacity: 1;
 }
 
-/* ========== SCROLL ANIMATIONS ========== */
+/* ========== SCROLL ANIMATIONS - MAS RAPIDAS ========== */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(30px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-1 { transition-delay: 0.05s; }
+.reveal-delay-2 { transition-delay: 0.1s; }
+.reveal-delay-3 { transition-delay: 0.15s; }
+.reveal-delay-4 { transition-delay: 0.2s; }
+.reveal-delay-5 { transition-delay: 0.25s; }
+.reveal-delay-6 { transition-delay: 0.3s; }
 
 /* ========== BACK TO TOP ========== */
 .back-to-top {
@@ -1001,7 +1142,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .skills-icons { grid-template-columns: repeat(4, 1fr); }
   .intro-title { font-size: 2.5rem; }
   .section-title { font-size: 2rem; }
-  .counter { font-size: 2.5rem; }
+  .counter-number { font-size: 2.5rem; }
   .orb { display: none; }
 }
 
@@ -1010,9 +1151,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .intro-title { font-size: 1.8rem; }
   .intro-subtitle { font-size: 1rem; }
   .section-title { font-size: 1.7rem; }
-  .service-box { margin-bottom: 1.5rem; }
-  .glass-project { margin-bottom: 1.5rem; }
-  .counter { font-size: 2rem; }
+  .service-box { margin-bottom: 1.5rem; min-height: 360px; }
+  .glass-project { margin-bottom: 1.5rem; min-height: 480px; }
+  .counter-number { font-size: 2rem; }
   .scroll-down-indicator { display: none; }
   .project-buttons { flex-direction: column; }
   .project-buttons .btn { width: 100%; }
@@ -1023,6 +1164,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .skill-item { padding: 0.75rem 0.25rem; }
   .skill-item i { font-size: 1.3rem; }
   .skill-item span { font-size: 0.6rem; }
+  .service-box { min-height: 340px; }
+  .glass-project { min-height: 460px; }
 }
 
 /* ========== TOUCH TARGETS ========== */
@@ -1042,7 +1185,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .title-box-2 { margin-bottom: 2rem; }
 .title-left {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
   color: var(--accent);
@@ -1063,6 +1206,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.7;
+  font-family: 'Outfit', sans-serif;
 }
 .list-ico { list-style: none; padding: 0; }
 .sect-pt4 { padding-top: 5rem; padding-bottom: 5rem; }
@@ -1085,4 +1229,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .title-box .subtitle-a {
   opacity: 0.85;
+}
+
+/* ========== FIX CARGA LENTA - OVERRIDE GLOBAL ========== */
+* {
+  animation-duration: inherit;
+  transition-duration: inherit;
+}
+
+/* Preloader rapido */
+#preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Typed cursor mas rapido */
+.typed-cursor {
+  animation: blink 0.7s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
