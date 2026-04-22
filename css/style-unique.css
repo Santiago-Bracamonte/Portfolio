@@ -1044,6 +1044,24 @@ footer {
   color: var(--accent);
   opacity: 1;
 }
+.glass-modal .modal-body {
+  padding: 0.75rem;
+}
+.glass-modal .carousel-inner {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.glass-modal .carousel-item {
+  background: rgba(2, 6, 23, 0.7);
+}
+.glass-modal .carousel-item img {
+  width: 100%;
+  height: auto;
+  max-height: 68vh;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+}
 .carousel-caption {
   background: rgba(11,7,20,0.8);
   backdrop-filter: blur(10px);
@@ -1058,6 +1076,21 @@ footer {
 .carousel-indicators li.active {
   background-color: var(--accent);
   opacity: 1;
+}
+
+@media (max-width: 767.98px) {
+  .glass-modal .modal-body {
+    padding: 0.5rem;
+  }
+  .glass-modal .carousel-item img {
+    max-height: 52vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .glass-modal .carousel-item img {
+    max-height: 72vh;
+  }
 }
 
 /* ========== SCROLL ANIMATIONS - MAS RAPIDAS ========== */
