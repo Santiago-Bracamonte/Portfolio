@@ -133,6 +133,7 @@
     document.documentElement.setAttribute('lang', lang === 'es' ? 'es' : 'en');
     var toggle = document.getElementById('langToggle');
     if (toggle) {
+      toggle.textContent = (lang === 'es') ? 'ES' : 'EN';
       toggle.setAttribute('data-current-lang', lang);
       toggle.setAttribute('aria-label', lang === 'es'
         ? 'Cambiar idioma. Idioma actual: Español'
