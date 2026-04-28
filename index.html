@@ -526,7 +526,8 @@
                       <h5 class="title-left" data-i18n="contact.send">Send Message</h5>
                     </div>
                     <div>
-                      <form id="contactForm" class="contactForm" novalidate>
+                      <form id="contactForm" class="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+                        <input type="hidden" name="access_key" value="d575a7b2-8c48-46db-8bcb-1a6f6e37a4fe">
                         <div class="form-group" aria-hidden="true" style="position:absolute;opacity:0;pointer-events:none;height:0;">
                           <label for="website">Do not fill this field</label>
                           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
@@ -534,14 +535,14 @@
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group floating-label">
-                              <input type="text" name="from_name" id="from_name" class="form-control" placeholder=" " data-i18n-placeholder="form.name" required minlength="2" maxlength="100" autocomplete="name" aria-required="true">
+                              <input type="text" name="name" id="from_name" class="form-control" placeholder=" " data-i18n-placeholder="form.name" required minlength="2" maxlength="100" autocomplete="name" aria-required="true">
                               <label for="from_name" data-i18n="form.name">Your Name</label>
                               <small class="form-error" id="error-from_name" role="alert" aria-live="polite"></small>
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group floating-label">
-                              <input type="email" name="from_email" id="from_email" class="form-control" placeholder=" " data-i18n-placeholder="form.email" required autocomplete="email" aria-required="true">
+                              <input type="email" name="email" id="from_email" class="form-control" placeholder=" " data-i18n-placeholder="form.email" required autocomplete="email" aria-required="true">
                               <label for="from_email" data-i18n="form.email">Your Email</label>
                               <small class="form-error" id="error-from_email" role="alert" aria-live="polite"></small>
                             </div>
@@ -557,13 +558,13 @@
                             <div class="form-group floating-label">
                               <textarea name="message" id="message" class="form-control" rows="5" placeholder=" " data-i18n-placeholder="form.message" required minlength="10" maxlength="2000" aria-required="true"></textarea>
                               <label for="message" data-i18n="form.message">Message</label>
-                              <small class="form-error" id="error-message" role="alert" aria-live="polite"></small>
+                              <small class="form-error" id="error-message-field" role="alert" aria-live="polite"></small>
                             </div>
                           </div>
                           <div class="col-md-12 text-center">
                             <div id="loading" class="loader" style="display: none;" aria-hidden="true"></div>
-                            <div id="success-message" style="display: none; color: #2dd4bf; margin-bottom: 1rem; font-weight: 600;" role="status" aria-live="polite"></div>
-                            <div id="error-message" style="display: none; color: #ff6b6b; margin-bottom: 1rem; font-weight: 600;" role="alert" aria-live="assertive"></div>
+                            <div id="form-success-message" style="display: none; color: #2dd4bf; margin-bottom: 1rem; font-weight: 600;" role="status" aria-live="polite"></div>
+                            <div id="form-error-message" style="display: none; color: #ff6b6b; margin-bottom: 1rem; font-weight: 600;" role="alert" aria-live="assertive"></div>
                             <button type="submit" id="submitBtn" class="button button-a button-big button-rouded btn-glow" data-i18n="form.send">Send Message</button>
                           </div>
                         </div>

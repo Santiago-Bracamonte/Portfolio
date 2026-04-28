@@ -1,151 +1,130 @@
-/**
- * contact-config.js — Form handler
- * Validation, honeypot, error handling, i18n support
- */
-
-var CONTACT_API_URL = "/api/contact";
-
 (function() {
-  'use strict';
+  var form = document.getElementById('contactForm');
+  if (!form) return;
 
-  var CONFIG = {
-    apiUrl: (typeof window !== 'undefined' && window.CONTACT_API_URL && window.CONTACT_API_URL.trim()) || '/api/contact',
-    timeoutMs: 15000
+  var CONTACT_API_URL = 'https://api.web3forms.com/submit';
+  var ACCESS_KEY = 'd575a7b2-8c48-46db-8bcb-1a6f6e37a4fe';
+
+  var nameInput = document.getElementById('from_name');
+  var emailInput = document.getElementById('from_email');
+  var subjectInput = document.getElementById('subject');
+  var messageInput = document.getElementById('message');
+  var websiteInput = document.getElementById('website');
+  var loadingEl = document.getElementById('loading');
+  var successEl = document.getElementById('form-success-message');
+  var errorEl = document.getElementById('form-error-message');
+  var submitBtn = document.getElementById('submitBtn');
+
+  var fieldErrors = {
+    from_name: document.getElementById('error-from_name'),
+    from_email: document.getElementById('error-from_email'),
+    subject: document.getElementById('error-subject'),
+    message: document.getElementById('error-message-field')
   };
-  var form, submitBtn, loader, successMsg, errorMsg;
 
-  function cacheElements() {
-    form = document.getElementById('contactForm');
-    if (!form) return false;
-    submitBtn = document.getElementById('submitBtn');
-    loader = document.getElementById('loading');
-    successMsg = document.getElementById('success-message');
-    errorMsg = document.getElementById('error-message');
-    return true;
+  function toggleLoading(isLoading) {
+    if (loadingEl) loadingEl.style.display = isLoading ? 'inline-block' : 'none';
+    if (submitBtn) submitBtn.disabled = isLoading;
   }
 
-  function showFieldError(fieldId, message) {
-    var err = document.getElementById('error-' + fieldId);
-    var field = document.getElementById(fieldId);
-    if (err) { err.textContent = message; err.style.display = 'block'; }
-    if (field) { field.setAttribute('aria-invalid', 'true'); field.classList.add('is-invalid'); }
+  function setStatus(node, text, visible) {
+    if (!node) return;
+    node.textContent = text || '';
+    node.style.display = visible ? 'block' : 'none';
   }
 
   function clearFieldErrors() {
-    var errors = form.querySelectorAll('.form-error');
-    for (var i = 0; i < errors.length; i++) { errors[i].textContent = ''; errors[i].style.display = 'none'; }
-    var fields = form.querySelectorAll('.is-invalid');
-    for (var j = 0; j < fields.length; j++) { fields[j].removeAttribute('aria-invalid'); fields[j].classList.remove('is-invalid'); }
+    Object.keys(fieldErrors).forEach(function(key) {
+      setStatus(fieldErrors[key], '', false);
+    });
   }
 
-  function clearMessages() {
-    if (successMsg) successMsg.style.display = 'none';
-    if (errorMsg) errorMsg.style.display = 'none';
+  function setFieldError(fieldName, message) {
+    setStatus(fieldErrors[fieldName], message, true);
   }
 
-  function setLoading(isLoading) {
-    if (!submitBtn || !loader) return;
-    submitBtn.disabled = isLoading;
-    submitBtn.style.opacity = isLoading ? '0.6' : '1';
-    submitBtn.setAttribute('aria-busy', isLoading ? 'true' : 'false');
-    loader.style.display = isLoading ? 'block' : 'none';
+  function validateField(input, minLength, message) {
+    if (!input) return true;
+    var value = input.value.trim();
+    if (!value) {
+      setFieldError(input.id, message);
+      return false;
+    }
+    if (minLength && value.length < minLength) {
+      setFieldError(input.id, message);
+      return false;
+    }
+    return true;
   }
 
-  function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-
-  function getI18nText(key) {
-    return (typeof window !== 'undefined' && window.i18n && window.i18n[key]) ? window.i18n[key] : null;
+  function validateEmail(input) {
+    if (!input) return true;
+    var value = input.value.trim();
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value || !emailPattern.test(value)) {
+      setFieldError(input.id, 'Please enter a valid email address.');
+      return false;
+    }
+    return true;
   }
 
-  function validateForm() {
-    clearFieldErrors();
-    var isValid = true;
-    var fromName = document.getElementById('from_name');
-    var fromEmail = document.getElementById('from_email');
-    var subject = document.getElementById('subject');
-    var message = document.getElementById('message');
-    var honeypot = document.getElementById('website');
-
-    // Honeypot
-    if (honeypot && honeypot.value.trim() !== '') {
-      console.warn('[Contact] Honeypot triggered');
-      return { valid: false, isBot: true };
-    }
-    if (!fromName || fromName.value.trim().length < 2) {
-      showFieldError('from_name', getI18nText('form.error.name') || 'Please enter your name (min 2 characters).');
-      isValid = false;
-    }
-    if (!fromEmail || !isValidEmail(fromEmail.value.trim())) {
-      showFieldError('from_email', getI18nText('form.error.email') || 'Please enter a valid email address.');
-      isValid = false;
-    }
-    if (!subject || subject.value.trim().length < 2) {
-      showFieldError('subject', getI18nText('form.error.subject') || 'Please enter a subject (min 2 characters).');
-      isValid = false;
-    }
-    if (!message || message.value.trim().length < 10) {
-      showFieldError('message', getI18nText('form.error.message') || 'Please enter a message (min 10 characters).');
-      isValid = false;
-    }
-    return { valid: isValid, isBot: false };
-  }
-
-  async function handleSubmit(event) {
+  form.addEventListener('submit', async function(event) {
     event.preventDefault();
-    if (!cacheElements()) return;
-    clearMessages();
-    var validation = validateForm();
-    if (validation.isBot) {
-      if (successMsg) { successMsg.textContent = '\u2713 Message sent successfully!'; successMsg.style.display = 'block'; }
-      form.reset();
-      setTimeout(function() { if (successMsg) successMsg.style.display = 'none'; }, 5000);
-      return;
-    }
-    if (!validation.valid) {
-      var firstError = form.querySelector('.is-invalid');
-      if (firstError) firstError.focus();
-      return;
-    }
-    setLoading(true);
-    var payload = {
-      from_name: document.getElementById('from_name').value.trim(),
-      from_email: document.getElementById('from_email').value.trim(),
-      subject: document.getElementById('subject').value.trim(),
-      message: document.getElementById('message').value.trim()
-    };
-    try {
-      var controller = new AbortController();
-      var timeoutId = setTimeout(function() { controller.abort(); }, CONFIG.timeoutMs);
-      var response = await fetch(CONFIG.apiUrl, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload), signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (!response.ok) {
-        var errorData = null, rawText = '';
-        try { errorData = await response.json(); } catch (e) { try { rawText = await response.text(); } catch (e2) {} }
-        var msg = errorData && errorData.error ? errorData.error : (rawText ? 'HTTP ' + response.status + ': ' + rawText.slice(0, 120) : 'HTTP ' + response.status);
-        throw new Error(msg);
-      }
-      if (successMsg) { successMsg.textContent = '\u2713 Message sent successfully!'; successMsg.style.display = 'block'; }
-      form.reset(); clearFieldErrors();
-      setTimeout(function() { if (successMsg) successMsg.style.display = 'none'; }, 5000);
-    } catch (error) {
-      console.error('[Contact] Error:', error);
-      var userMessage;
-      if (error.name === 'AbortError') userMessage = '\u2717 Request timed out. Please try again.';
-      else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) userMessage = '\u2717 Network error. Check your connection.';
-      else userMessage = '\u2717 ' + (error.message || 'Error sending message. Please try again.');
-      if (errorMsg) { errorMsg.textContent = userMessage; errorMsg.style.display = 'block'; }
-      setTimeout(function() { if (errorMsg) errorMsg.style.display = 'none'; }, 8000);
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { if (cacheElements()) form.addEventListener('submit', handleSubmit); });
-  } else {
-    if (cacheElements()) form.addEventListener('submit', handleSubmit);
-  }
+    clearFieldErrors();
+    setStatus(successEl, '', false);
+    setStatus(errorEl, '', false);
+
+    var isNameValid = validateField(nameInput, 2, 'Please enter your name.');
+    var isEmailValid = validateEmail(emailInput);
+    var isSubjectValid = validateField(subjectInput, 2, 'Please enter a subject.');
+    var isMessageValid = validateField(messageInput, 10, 'Please write a longer message.');
+
+    if (websiteInput && websiteInput.value.trim()) {
+      return;
+    }
+
+    if (!isNameValid || !isEmailValid || !isSubjectValid || !isMessageValid) {
+      setStatus(errorEl, 'Please review the highlighted fields.', true);
+      return;
+    }
+
+    toggleLoading(true);
+
+    try {
+      var formData = new FormData(form);
+      formData.set('access_key', ACCESS_KEY);
+      formData.set('name', nameInput.value.trim());
+      formData.set('email', emailInput.value.trim());
+      formData.set('replyto', emailInput.value.trim());
+      formData.set('subject', subjectInput.value.trim());
+      formData.set('message', messageInput.value.trim());
+      formData.set('from_name', nameInput.value.trim());
+      formData.set('from_email', emailInput.value.trim());
+      formData.delete('website');
+
+      var response = await fetch(CONTACT_API_URL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json'
+        },
+        body: formData
+      });
+
+      var result = await response.json().catch(function() {
+        return {};
+      });
+
+      if (!response.ok || result.success === false) {
+        throw new Error(result.message || 'Unable to send the message right now.');
+      }
+
+      form.reset();
+      setStatus(successEl, 'Message sent successfully. I will reply as soon as possible.', true);
+    } catch (error) {
+      setStatus(errorEl, error.message || 'Unable to send the message right now.', true);
+    } finally {
+      toggleLoading(false);
+    }
+  });
 })();
